@@ -30,10 +30,10 @@ public class Main {
         double expenses = capital * i / 100;        // расходы (изъятие)
         capital = capital - expenses;
         expenses = expenses * (1 + Costants.INFLATION_RATE[year - 2001] / 100);  //индекация расходов (изъятия)
+
         if (year > 2002) {
             capital = capital * Costants.MOEX_RATE[year - 2001] / Costants.MOEX_RATE[year - 2002];
         }
-
 
         year++;
 
@@ -41,18 +41,11 @@ public class Main {
             capital = capital - expenses; // остаток капитала после изъятия
             expenses = expenses * (1 + Costants.INFLATION_RATE[year - 2001] / 100);       //индексация расходов
             capital = capital * Costants.MOEX_RATE[year - 2001] / Costants.MOEX_RATE[year - 2002]; //"прирост" капитала относительно конца и начала года
-
             year++;
         }
-        System.out.println(i);
-        System.out.println(capital);
-        System.out.println(expenses);
-        System.out.println();
 
         if (capital - expenses > 0) {
             maxPercent = i;
         }
-
-
     }
 }
