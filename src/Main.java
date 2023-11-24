@@ -28,24 +28,31 @@ public class Main {
     public static void definition(int year, double i) {
         double capital = Costants.MOEX_RATE[year - 2002];             // капитал
         double expenses = capital * i / 100;        // расходы (изъятие)
-
         capital = capital - expenses;
-
+        expenses = expenses * (1 + Costants.INFLATION_RATE[year - 2001] / 100);  //индекация расходов (изъятия)
         if (year > 2002) {
-            capital = capital * Costants.MOEX_RATE[year - 2002] / Costants.MOEX_RATE[year - 2003];
+            capital = capital * Costants.MOEX_RATE[year - 2001] / Costants.MOEX_RATE[year - 2002];
         }
-        expenses = expenses * (1 + Costants.INFLATION_RATE[year - 2002] / 100);  //индекация расходов (изъятия)
+
+
         year++;
 
-        while (year <= 2022) {
+        while (year <= 2021) {
             capital = capital - expenses; // остаток капитала после изъятия
-            capital = capital * Costants.MOEX_RATE[year - 2002] / Costants.MOEX_RATE[year - 2003]; //"прирост" капитала относительно конца и начала года
-            expenses = expenses * (1 + Costants.INFLATION_RATE[year - 2002] / 100);       //индексация расходов
+            expenses = expenses * (1 + Costants.INFLATION_RATE[year - 2001] / 100);       //индексация расходов
+            capital = capital * Costants.MOEX_RATE[year - 2001] / Costants.MOEX_RATE[year - 2002]; //"прирост" капитала относительно конца и начала года
+
             year++;
         }
+        System.out.println(i);
+        System.out.println(capital);
+        System.out.println(expenses);
+        System.out.println();
 
-        if (capital - expenses < 0 && capital > 0) {
+        if (capital - expenses > 0) {
             maxPercent = i;
         }
+
+
     }
 }
