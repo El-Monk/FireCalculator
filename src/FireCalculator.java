@@ -11,7 +11,7 @@ public class FireCalculator {
             int currentYear = Integer.parseInt(bufferedReader.readLine());
 
             if (currentYear < 2002) {
-                throw new Exception("xaxa");
+                throw new Exception();
             }
 
             for (double i = 0.5; i <= 100; i += 0.5) {
