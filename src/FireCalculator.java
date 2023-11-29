@@ -1,28 +1,28 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class FireCalculator {
+public class FireCalculator extends Costants{
     static double maxPercent;
 
-    public void solver() {
+    public void solver() throws Exception{
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
 
             System.out.println("Введите дату:");
             int currentYear = Integer.parseInt(bufferedReader.readLine());
 
             if (currentYear < 2002) {
-                throw new Exception();
+                throw new Exception("Введена некорректная дата");
             }
-
             for (double i = 0.5; i <= 100; i += 0.5) {
                 definition(currentYear, i);
             }
 
             System.out.println(maxPercent);
 
-        } catch (Exception e) {
-            System.out.println("Введена некорректная дата");
-            e.printStackTrace();
+        } catch (IOException e) {
+//            System.out.println("Введена некорректная дата");
+//            e.printStackTrace();
         }
     }
 
@@ -30,7 +30,7 @@ public class FireCalculator {
     public static void definition(int year, double i) {
         int currentYear = year - 2002;
 
-        double capital = Costants.MOEX_RATE[currentYear];
+        double capital = MOEX_RATE[currentYear];
         double expenses = capital * i / 100;
         capital = remainingCapital(capital, expenses);
         expenses = indexationOfExpenses(expenses, currentYear + 1);
@@ -58,11 +58,11 @@ public class FireCalculator {
     }
 
     public static double indexationOfExpenses(double expenses, int nextYear) { //индекация расходов (изъятия)
-        return expenses * (1 + Costants.INFLATION_RATE[nextYear] / 100);
+        return expenses * (1 + INFLATION_RATE[nextYear] / 100);
     }
 
     public static double capitalChange(double capital, int currentYear) { //"прирост" капитала
-        return capital * Costants.MOEX_RATE[currentYear + 1] / Costants.MOEX_RATE[currentYear];
+        return capital * MOEX_RATE[currentYear + 1] / MOEX_RATE[currentYear];
     }
 
 }
