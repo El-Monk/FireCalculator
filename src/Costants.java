@@ -1,13 +1,4 @@
 public class Costants {
-
-    public static double moexRate(int a) {
-        return MOEX_RATE[a];
-    }
-
-    public static double infRate (int a) {
-        return INFLATION_RATE[a];
-    }
-
     public static final double[] MOEX_RATE = {
             417.42, //2002  -0
             673.72, //2003

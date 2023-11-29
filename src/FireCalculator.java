@@ -25,7 +25,7 @@ public class FireCalculator extends Costants {
     public static void definition(int year, double i) {
         int currentYear = year - 2002;
 
-        double capital = moexRate(currentYear);
+        double capital = MOEX_RATE[currentYear];
         double expenses = capital * i / 100;
         capital = remainingCapital(capital, expenses);
         expenses = indexationOfExpenses(expenses, currentYear + 1);
@@ -53,11 +53,14 @@ public class FireCalculator extends Costants {
     }
 
     public static double indexationOfExpenses(double expenses, int nextYear) { //индекация расходов (изъятия)
-        return expenses * (1 + infRate(nextYear) / 100);
+        double inflationRateNextYear = INFLATION_RATE[nextYear];
+        return expenses * (1 + inflationRateNextYear / 100);
     }
 
     public static double capitalChange(double capital, int currentYear) { //"прирост" капитала
-        return capital * moexRate(currentYear + 1) / moexRate(currentYear);
+        double moexRateCurrentYear = MOEX_RATE[currentYear];
+        double moexRateNextYear = MOEX_RATE[currentYear + 1];
+        return capital * moexRateNextYear / moexRateCurrentYear;
     }
 
 }
