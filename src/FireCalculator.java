@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class FireCalculator extends Costants {
+public class FireCalculator {
     static double maxPercent;
 
     public void solver() throws Exception {
@@ -25,7 +25,7 @@ public class FireCalculator extends Costants {
     public static void definition(int year, double i) {
         int currentYear = year - 2002;
 
-        double capital = MOEX_RATE[currentYear];
+        double capital = Costants.MOEX_RATE[currentYear];
         double expenses = capital * i / 100;
         capital = remainingCapital(capital, expenses);
         expenses = indexationOfExpenses(expenses, currentYear + 1);
@@ -53,14 +53,13 @@ public class FireCalculator extends Costants {
     }
 
     public static double indexationOfExpenses(double expenses, int nextYear) { //индекация расходов (изъятия)
-        double inflationRateNextYear = INFLATION_RATE[nextYear];
+        double inflationRateNextYear = Costants.INFLATION_RATE[nextYear];
         return expenses * (1 + inflationRateNextYear / 100);
     }
 
     public static double capitalChange(double capital, int currentYear) { //"прирост" капитала
-        double moexRateCurrentYear = MOEX_RATE[currentYear];
-        double moexRateNextYear = MOEX_RATE[currentYear + 1];
+        double moexRateCurrentYear = Costants.MOEX_RATE[currentYear];
+        double moexRateNextYear = Costants.MOEX_RATE[currentYear + 1];
         return capital * moexRateNextYear / moexRateCurrentYear;
     }
-
 }
